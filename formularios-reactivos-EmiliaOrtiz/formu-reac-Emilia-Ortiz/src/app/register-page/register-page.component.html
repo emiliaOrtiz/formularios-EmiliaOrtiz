@@ -1,19 +1,88 @@
-<main>
-    <div class="container">
-      <div class="card">
+
+    <div class="container align-center">
+      <div class="card align-center">
+        <h5 class="card-header text-black align-center">Formulario de registro</h5>
         <div class="card-body">
-            <h5 class="card-title">Formulario de registro</h5>
-            <form class="row g-3">
+            <form [formGroup]="loginForm" class="row g-3" (ngSubmit)="onSubmit()">
                 <div class="col-6">
-                    <label class="form-label" for="firstName">Nombre:</label>
-                    <input class="form-control" type="text"/>
+                    <label  class="form-label" for="firstName">Nombre:</label>
+                    <input  [formControl]="firstNameControl" class="form-control"  type="text"/>
+                    <div *ngFor="let error of firstNameControl.errors|keyvalue" class="alert alert-danger">
+                       <!--{{error.key|json}}--> 
+                        <div [ngSwitch]="error.key">
+                            <div *ngSwitchCase="'required'">
+                                Este campo es requerido
+                            </div>
+                            <div *ngSwitchCase="'minlength'">
+                                 Debe tener 3 caracteres como minimo
+                            </div>
+                            <div *ngSwitchDefault="">
+                                Error desconocido
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6">
                     <label class="form-label" for="lastName">Apellido:</label>
-                    <input class="form-control" type="text"/>
+                    <input [formControl]="lastNameControl" class="form-control" type="text"/>
+                    <div *ngFor="let error of lastNameControl.errors|keyvalue" class="alert alert-danger">
+                        <!--{{error.key|json}}--> 
+                         <div [ngSwitch]="error.key">
+                             <div *ngSwitchCase="'required'">
+                                 Este campo es requerido
+                             </div>
+                             <div *ngSwitchDefault="">
+                                 Error desconocido
+                             </div>
+                         </div>
+                        </div>
                 </div>
+                <div class="col-6">
+                    <label class="form-label" for="email">Email:</label>
+                    <input [formControl]="emailControl" class="form-control" type="email"/>
+                    <div *ngFor="let error of emailControl.errors|keyvalue" class="alert alert-danger">
+                        <!--{{error.key|json}}--> 
+                         <div [ngSwitch]="error.key">
+                             <div *ngSwitchCase="'required'">
+                                 Este campo es requerido
+                             </div>
+                             <div *ngSwitchCase="'email'">
+                                  El mail debe tener un formato valido
+                             </div>
+                             <div *ngSwitchDefault="">
+                                 Error desconocido
+                             </div>
+                         </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="password">Password:</label>
+                    <input [formControl]="passControl" class="form-control" type="password"/>
+                    <div *ngFor="let error of passControl.errors|keyvalue" class="alert alert-danger">
+                        <!--{{error.key|json}}--> 
+                         <div [ngSwitch]="error.key">
+                             <div *ngSwitchCase="'required'">
+                                 Este campo es requerido
+                             </div>
+                             <div *ngSwitchCase="'minlength'">
+                                  el password debe ser mayor a 6 caracteres y contener numeros
+                             </div>
+                             <div *ngSwitchDefault="">
+                                 Error desconocido
+                             </div>
+                         </div>
+                        </div>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="repassword">Repetir Password:</label>
+                    <input [formControl]="repassControl" class="form-control" type="password"/>
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button [disabled]="loginForm.invalid" class="btn btn-success" type="submit">Enviar</button>  
+                </div>
+               
             </form>
         </div>
       </div>
     </div>
-  </main>
+  
